@@ -3,34 +3,56 @@ name: CI Pipeline
 on:
   push:
     branches:
+      - dev
+      - staging
       - main
   pull_request:
     branches:
+      - dev
+      - staging
       - main
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [20.x]
+
     steps:
-      # Step 1: Checkout the repository code
-      - name: Checkout repository
+      # Step 1: Checkout the repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
       # Step 2: Set up Node.js environment
-      - name: Set up Node.js
+      - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: ${{ matrix.node-version }}
 
-      # Step 3: Install dependencies
+      # Step 3: Set environment variables based on branch
+      - name: Set environment variables
+        env:
+          IS_DEVELOPMENT: ${{ contains(github.ref, 'dev') }}
+          IS_STAGING: ${{ contains(github.ref, 'staging') }}
+          IS_PRODUCTION: ${{ contains(github.ref, 'main') }}
+
+      # Step 4: Install dependencies (using npm or yarn)
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Run tests
+      # Step 5: Run tests
       - name: Run tests
-        run: npm test -- --watchAll=false
+        run: npm test
 
-      # Step 5: Build the application
-      - name: Build the application
-        run: npm run build
+      # Step 6: Build the app based on the branch/environment
+      - name: Build the project
+        run: |
+          if [ "${{ env.IS_DEVELOPMENT }}" = "true" ]; then
+            npm run build:dev
+          elif [ "${{ env.IS_STAGING }}" = "true" ]; then
+            npm run build:staging
+          elif [ "${{ env.IS_PRODUCTION }}" = "true" ]; then
+            npm run build:prod
+          fi

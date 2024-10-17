@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './layouts/Header.tsx';
 import Footer from './layouts/Footer.tsx';
 import NotFound from './pages/NotFound.tsx';
+import IndexPage from './pages/Index.tsx';
 
 function App() {
   const queryClient = new QueryClient();
@@ -18,10 +19,7 @@ function App() {
               <Route path="/login" element={<>todo</>} />
               <Route path="*" element={<NotFound />} />
 
-              {/*<Route*/}
-              {/*  path="/"*/}
-              {/*  element={<RouteGuard component={<Dashboard />} />}*/}
-              {/*/>*/}
+              <Route path="/" element={<IndexPage />} />
             </Routes>
           </main>
           <Footer />

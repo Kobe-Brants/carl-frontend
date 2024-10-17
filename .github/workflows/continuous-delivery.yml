@@ -8,11 +8,21 @@ on:
     conclusion: success
   workflow_dispatch:  # Allows manual trigger
   push:
-    tags:
-      - 'v*.*.*'  # Deploy only on version tags like v1.0.0
+    branches:
+      - dev
+      - staging
+      - main
+
+permissions:
+  pages: write
+  id-token: write
 
 jobs:
   deploy:
+    environment:
+      name: ${{ github.ref == 'refs/heads/main' && 'production' || (github.ref == 'refs/heads/staging' && 'staging' || 'development') }}
+      url: ${{ steps.deployment.outputs.page_url }}
+
     runs-on: ubuntu-latest
 
     steps:
@@ -35,7 +45,14 @@ jobs:
         run: npm run build
 
 #      # Step 5: Deploy to GitHub Pages
-#      - name: Deploy to GitHub Pages
-#        run: npm run deploy
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
