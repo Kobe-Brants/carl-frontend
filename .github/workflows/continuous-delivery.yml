@@ -1,9 +1,15 @@
 name: CD Pipeline
 
 on:
+  workflow_run:
+    workflows: ["CI Pipeline"]
+    types:
+      - completed
+    conclusion: success
+  workflow_dispatch:  # Allows manual trigger
   push:
-    branches:
-      - main
+    tags:
+      - 'v*.*.*'  # Deploy only on version tags like v1.0.0
 
 jobs:
   deploy:
