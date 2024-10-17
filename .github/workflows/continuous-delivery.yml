@@ -36,15 +36,29 @@ jobs:
         with:
           node-version: '20.x'
 
-      # Step 3: Install dependencies
+      # Step 3: Set environment variables based on branch
+      - name: Set environment variables
+        run: |
+          echo "IS_DEVELOPMENT=${{ contains(github.ref, 'dev') }}" >> $GITHUB_ENV
+          echo "IS_STAGING=${{ contains(github.ref, 'staging') }}" >> $GITHUB_ENV
+          echo "IS_PRODUCTION=${{ contains(github.ref, 'main') }}" >> $GITHUB_ENV
+
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Build the React app
-      - name: Build the React app
-        run: npm run build
+      # Step 5: Build the app based on the branch/environment
+      - name: Build the project
+        run: |
+          if [ "${{ env.IS_DEVELOPMENT }}" = "true" ]; then
+            npm run build:dev
+          elif [ "${{ env.IS_STAGING }}" = "true" ]; then
+            npm run build:staging
+          elif [ "${{ env.IS_PRODUCTION }}" = "true" ]; then
+            npm run build:prod
+          fi
 
-#      # Step 5: Deploy to GitHub Pages
+#      # Step 6: Deploy to GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
