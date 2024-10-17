@@ -33,10 +33,10 @@ jobs:
 
       # Step 3: Set environment variables based on branch
       - name: Set environment variables
-        env:
-          IS_DEVELOPMENT: ${{ contains(github.ref, 'dev') }}
-          IS_STAGING: ${{ contains(github.ref, 'staging') }}
-          IS_PRODUCTION: ${{ contains(github.ref, 'main') }}
+        run: |
+          echo "IS_DEVELOPMENT=${{ contains(github.ref, 'dev') }}" >> $GITHUB_ENV
+          echo "IS_STAGING=${{ contains(github.ref, 'staging') }}" >> $GITHUB_ENV
+          echo "IS_PRODUCTION=${{ contains(github.ref, 'main') }}" >> $GITHUB_ENV
 
       # Step 4: Install dependencies (using npm or yarn)
       - name: Install dependencies
