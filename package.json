@@ -9,8 +9,9 @@
     "build:staging": "vite build --mode staging",
     "build:prod": "vite build --mode production",
     "lint": "eslint .",
-    "preview": "vite preview",
     "test": "jest",
+    "prettier": "prettier . --check",
+    "preview": "vite preview",
     "deploy": "gh-pages -d build"
   },
   "dependencies": {

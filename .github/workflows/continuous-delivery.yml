@@ -1,7 +1,7 @@
 name: CD Pipeline
 
 on:
-  workflow_dispatch:  # Allows manual trigger
+  workflow_dispatch: # Allows manual trigger
   push:
     branches:
       - dev
@@ -55,7 +55,7 @@ jobs:
             npm run build:prod
           fi
 
-#      # Step 6: Deploy to GitHub Pages
+      #      # Step 6: Deploy to GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

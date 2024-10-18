@@ -41,7 +41,19 @@ jobs:
       - name: Run tests
         run: npm test
 
-      # Step 6: Build the app based on the branch/environment
+      # Step 6: Run lint
+      - name: Run lint
+        run: npm lint
+
+      # Step 7: Run Prettier check
+      - name: Run Prettier
+        run: npm run prettier
+
+      # Step 8: Fail the job if files need formatting
+      - name: Check for unformatted files
+        run: git diff --exit-code || (echo "Some files are not formatted with Prettier. Please format them." && exit 1)
+
+      # Step 9: Build the app based on the branch/environment
       - name: Build the project
         run: |
           if [ "${{ env.IS_DEVELOPMENT }}" = "true" ]; then
