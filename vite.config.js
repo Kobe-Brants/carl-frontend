@@ -2,9 +2,12 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ mode }) => {
   if (mode === 'production') {
-    return { plugins: [react()], base: './carl-frontend/' };
+    return {
+      plugins: [react()],
+      base: './',
+    };
   }
 
   return { plugins: [react()] };
