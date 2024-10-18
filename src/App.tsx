@@ -8,10 +8,11 @@ import IndexPage from './pages/Index.tsx';
 
 function App() {
   const queryClient = new QueryClient();
+  const baseName = import.meta.env.VITE_BASE_NAME;
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <BrowserRouter basename={baseName}>
         <div className="flex flex-col h-screen justify-between sm:px-6 lg:px-8 mx-auto max-h-screen">
           <Header />
           <main className="mb-auto flex-grow">
