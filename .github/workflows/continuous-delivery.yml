@@ -44,6 +44,8 @@ jobs:
 
       # Step 5: Build the app based on the branch/environment
       - name: Build the project
+        env:
+          VITE_BASE_NAME: ${{ vars.VITE_BASE_NAME }}
         run: |
           if [ "${{ env.IS_DEVELOPMENT }}" = "true" ]; then
             npm run build:dev
