@@ -1,17 +1,19 @@
-// import { useRestApi } from '@/context/api/ApiRestContext';
-// import { ApiRestInstance } from '@/context/api/types';
-// import { UseMutationOptions, useMutation } from '@tanstack/react-query';
-//
-// const deleteFlowById = async (api: ApiRestInstance, id: number) => {
-//   const res = await api.delete<boolean>(`flows/${id}/Delete`);
-//   return res.data;
-// };
-//
-// export function useMutationDeleteFlowById(options?: UseMutationOptions<boolean, Error, { id: number }> | undefined) {
-//   const api = useRestApi();
-//
-//   return useMutation<boolean, Error, { id: number }>({
-//     mutationFn: ({ id }) => deleteFlowById(api, id),
-//     ...options,
-//   });
-// }
+import { UseMutationOptions, useMutation } from '@tanstack/react-query';
+import { ApiInstance } from '@/types/api/types.ts';
+import { useApi } from '@/services/contexts/ApiContext.tsx';
+
+const deleteProductById = async (api: ApiInstance, productId: string) => {
+  const res = await api.delete<boolean>(`products/${productId}`);
+  return res.data;
+};
+
+export function useMutationDeleteProductById(
+  options?: UseMutationOptions<boolean, Error, { productId: string }>,
+) {
+  const api = useApi();
+
+  return useMutation<boolean, Error, { productId: string }>({
+    mutationFn: ({ productId }) => deleteProductById(api, productId),
+    ...options,
+  });
+}

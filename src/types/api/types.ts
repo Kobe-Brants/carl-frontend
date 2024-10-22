@@ -1,4 +1,5 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { UseQueryOptions } from '@tanstack/react-query';
 
 export type RequestConfig = AxiosRequestConfig & {
   disableTokenInBody?: boolean;
@@ -25,10 +26,9 @@ export interface ApiInstance {
   ): Promise<R>;
 }
 
-export interface PagedResult<T> {
-  data: T;
-  pageNumber: number;
-  pageSize: number;
-  totalPages: number;
-  totalRecords: number;
-}
+export type QueryOpt<Response> = Omit<
+  UseQueryOptions<Response, any, Response, any[]>,
+  'queryKey'
+> & {
+  queryKey?: any[];
+};
