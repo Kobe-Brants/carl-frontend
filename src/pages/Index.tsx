@@ -1,10 +1,5 @@
 const IndexPage = () => {
-  return (
-    <div>
-      <h1>Environment Settings</h1>
-      {import.meta.env.MODE}
-    </div>
-  );
+  return <div></div>;
 };
 
 export default IndexPage;

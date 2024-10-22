@@ -13,18 +13,16 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter basename={baseName}>
-        <div className="flex flex-col h-screen justify-between sm:px-6 lg:px-8 mx-auto max-h-screen">
-          <Header />
-          <main className="mb-auto flex-grow">
-            <Routes>
-              <Route path="/login" element={<>todo</>} />
-              <Route path="*" element={<NotFound />} />
+        <Header />
+        <main className="min-h-[80vh]">
+          <Routes>
+            <Route path="/login" element={<>todo</>} />
+            <Route path="*" element={<NotFound />} />
 
-              <Route path="/" element={<IndexPage />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
+            <Route path="/" element={<IndexPage />} />
+          </Routes>
+        </main>
+        <Footer />
       </BrowserRouter>
     </QueryClientProvider>
   );
