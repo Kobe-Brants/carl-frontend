@@ -35,7 +35,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <Link to="/" className="text-2xl font-bold">
-            Carl Order
+            <img src="/logo.png" alt="logo" className="h-20" />
           </Link>
           <Menubar model={items} />
           <div>

@@ -11,7 +11,7 @@ export default ({ mode }) => {
 
   return defineConfig({
     plugins: [react()],
-    base: env.VITE_BASE_NAME || '/',
+    base: env.VITE_BASE_NAME || '/carl-frontend', // TODO check
     resolve: {
       alias: {
         '@': root,
